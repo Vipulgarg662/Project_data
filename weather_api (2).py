@@ -1,8 +1,7 @@
 import requests
 from pprint import pprint
-from location import loc
 #taking city name from user
-city=loc()
+city=input("Enter City")
 
 #Api url which contains the url
 #q is taking city name
@@ -22,8 +21,11 @@ data=res.json()
 temp=data['main']['temp']
 hum=data['main']['humidity']
 weather=data['weather'][0]['description']
-print("Location: ",data['name'])
-print('temperature: ',temp)
-print("humidity: ",hum)
-print("type of weather: ",weather)
+wind=data['wind']['speed']
+print("Location       :",data['name'])
+print('temperature    :',temp,"C")
+print("humidity       :",hum)
+print("Weather Status :",weather)
+print("Wind Speed     :",wind)
+
 

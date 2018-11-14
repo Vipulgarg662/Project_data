@@ -1,4 +1,3 @@
 import geocoder
-def loc():
-    g = geocoder.ip('me')
-    return(g.city)
+g = geocoder.ip('me')
+print(g.city)

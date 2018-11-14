@@ -25,7 +25,7 @@ except sr.RequestError as e:
 
 language='en'
 myobj = gTTS(text=x, lang=language, slow=False)
-myobj.save("welcome.mp3") 
+myobj.save("welcome.wav") 
   
 # Playing the converted file 
-os.system("mpg321 welcome.mp3")
+os.system("mpg321 recording.wav")
