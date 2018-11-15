@@ -4,7 +4,7 @@ import requests
 import webbrowser
 import os
 import re
-from gtts import gTTS
+import win32com.client as wincl
 
 def Weather_Status(city):
     url="http://api.openweathermap.org/data/2.5/weather?q={}&appid=2bca5db701a487480073a7661ff4e481&units=metric".format(city)
@@ -15,6 +15,7 @@ def Weather_Status(city):
     print("humidity       :",data['main']['humidity'])
     print("Weather Status :",data['weather'][0]['description'])
     print("Wind Speed     :",data['wind']['speed'],'m/s')
+    Text_to_speech("Current weather in %s is %s the temperature is %.lf degree celsius"%(data['name'],data['weather'][0]['description'],data['main']['temp']))
 
 def Movie_Info(movie):
     url="http://www.omdbapi.com/?t={}&apikey=44115df3".format(movie)
@@ -34,13 +35,16 @@ def Movie_Info(movie):
     print("Country       :",data['Country'])
     print("Imdb Rating   :",data['imdbRating'])
     print("Plot          :",data['Plot'])
+    Text_to_speech("This is all i got about movie %s"%(data['Title']))
     
 def Open_website(a):
     url="https://www."+a
     webbrowser.open(url)
+    Text_to_speech("Done")
 
 def Open_apps(a):
     os.system("start {}".format(a))
+    Text_to_speech("Done")
 
 def System_shutdown(a):
     if a=='shutdown':
@@ -58,19 +62,18 @@ def Speech_to_text():
         audio=r.listen(source)
         try:
             text=r.recognize_google(audio)
-            print("You said : ",text)
+            print(text)
+            return text
         except sr.UnknownValueError:
-            print("Google Speech Recognition could not understand audio")
+            Text_to_speech("Google Speech Recognition could not understand audio")
         except sr.RequestError as e:
-            print("Could not request results from Google Speech Recognition service; {0}".format(e))
-        return text
+            Text_to_speech("Could not request results from Google Speech Recognition service; {0}".format(e))
+        
 
 def Text_to_speech(x):
     print(x)
-    #language='en'
-    #myobj = gTTS(text=x, lang=language)
-    #myobj.save("output.mp3") 
-    #os.system("output.wav")
+    speak=wincl.Dispatch("SAPI.SpVoice")
+    speak.Speak(x)
     
 def assistant(text):
     if 'movie' in text:
@@ -100,13 +103,15 @@ def assistant(text):
         System_shutdown(command)
 
     elif 'exit' in text:
+        Text_to_speech("See you next time, bye")
         return 'exit'
 
 
 #root=Tk()
 while(1):
     Text_to_speech("Tell me what to do")
-    a=assistant(Speech_to_text())
+    text=Speech_to_text()
+    a=assistant(text)
     if a=='exit':
         break
     
