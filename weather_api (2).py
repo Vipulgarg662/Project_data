@@ -15,7 +15,7 @@ res=requests.get(url)
 data=res.json()
 
 #pprint is used to print in special managed format
-#pprint(data)
+pprint(data)
 
 #to print a particular value
 temp=data['main']['temp']

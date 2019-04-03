@@ -5,7 +5,7 @@ movie=input("movie name : ")
 url="http://www.omdbapi.com/?t={}&apikey=44115df3".format(movie)
 res=requests.get(url)
 data=res.json()
-#pprint(data)
+pprint(data)
 post=data['Poster']
 
 typ=data['Type']

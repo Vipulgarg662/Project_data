@@ -1,15 +1,12 @@
-import subprocess
+import os
 
 
 def shutdown(self):
-    subprocess.call(["shutdown", "-f", "-s", "-t", "60"])
+    os.system("shutdown -s")
 def restart(self):
-    subprocess.call(["Restarting system", "-f", "-r", "-t", "60"])
+    os.system("shutdown -r")
 def logout(self):
-    subprocess.call(["Logging Out User", "-f","-l","-t","60"])
-def abort(self):
-    subprocess.call(["Aborting Shutdown", "-f","-a","-t","60"])
-
+    os.system("shutdown -l")
 
 user=input("Tell me ")
 
@@ -19,5 +16,4 @@ elif user=='restart':
     restart(1)
 elif user=='log out':
     logout(1)
-elif user=='abort':
-    abort(1)
+
